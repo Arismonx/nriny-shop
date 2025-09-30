@@ -6,12 +6,13 @@ import (
 	"os"
 
 	"github.com/Arismonx/nriny-shop/config"
+	"github.com/Arismonx/nriny-shop/pkg/database"
 )
 
 func main() {
 	ctx := context.Background()
-	_ = ctx
 
+	//init config
 	cfg := config.LoadConfig(func() string {
 		if len(os.Args) < 2 {
 			log.Fatal("Error: .env path is required")
@@ -20,5 +21,13 @@ func main() {
 		return os.Args[1]
 	}())
 
-	log.Println(cfg)
+	//database connecting
+	db := database.ConnectingMongoDB(ctx, &cfg)
+	log.Println(db)
+
+	defer func() {
+		if err := db.Disconnect(ctx); err != nil {
+			panic(err)
+		}
+	}()
 }
