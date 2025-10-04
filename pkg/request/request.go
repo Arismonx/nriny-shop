@@ -1,0 +1,39 @@
+package request
+
+import (
+	"log"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/labstack/echo/v4"
+)
+
+type (
+	contextWrapperService interface {
+		Bind(data any) error
+	}
+
+	contextWrapper struct {
+		context   echo.Context
+		validator *validator.Validate
+	}
+)
+
+func ContextWrapper(ctx echo.Context) contextWrapperService {
+	return &contextWrapper{
+		context:   ctx,
+		validator: validator.New(),
+	}
+}
+
+func (req *contextWrapper) Bind(data any) error {
+
+	if err := req.context.Bind(data); err != nil {
+		log.Printf("Error: Bind data failed: %s", err.Error())
+	}
+
+	if err := req.validator.Struct(data); err != nil {
+		log.Printf("Error: Validate data failed: %s", err.Error())
+	}
+
+	return nil
+}
