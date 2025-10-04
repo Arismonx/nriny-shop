@@ -7,6 +7,7 @@ import (
 
 	"github.com/Arismonx/nriny-shop/config"
 	"github.com/Arismonx/nriny-shop/pkg/database"
+	"github.com/Arismonx/nriny-shop/server"
 )
 
 func main() {
@@ -30,4 +31,8 @@ func main() {
 			panic(err)
 		}
 	}()
+
+	// server start
+	server.Start(ctx, &cfg, db)
+	
 }

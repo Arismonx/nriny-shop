@@ -1,1 +1,17 @@
-package inventoryhandler
+package inventoryHandler
+
+import (
+	"github.com/Arismonx/nriny-shop/modules/inventory/inventoryUsecase"
+)
+
+type (
+	inventoryGrpcHandler struct {
+		inventoryUsecase inventoryUsecase.InventoryUsecaseService
+	}
+)
+
+func NewInventoryGrpcHandler(
+	inventoryUsecase inventoryUsecase.InventoryUsecaseService,
+) *inventoryGrpcHandler {
+	return &inventoryGrpcHandler{inventoryUsecase}
+}
