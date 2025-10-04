@@ -84,7 +84,7 @@ func Start(pctx context.Context, cfg *config.Config, db *mongo.Client) {
 	case "auth":
 		s.authService()
 	case "item":
-		s.inventoryService()
+		s.itemService()
 	case "inventory":
 		s.inventoryService()
 	case "player":
