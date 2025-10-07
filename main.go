@@ -34,5 +34,5 @@ func main() {
 
 	// server start
 	server.Start(ctx, &cfg, db)
-	
+
 }
