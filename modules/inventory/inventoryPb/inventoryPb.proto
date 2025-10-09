@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "github.com/Arismonx/nriny-shop";
+
+// structure
+message IsAvaibleToSellReq {
+    string playerId = 1;
+    string itemId = 2;
+}
+
+message IsAvaibleToSellRes {
+    bool IsAvaible = 1;
+}
+
+// Methods
+service InventoryGrpcService {
+    rpc IsAvailableToSell(IsAvaibleToSellReq) returns (IsAvaibleToSellRes);
+}
