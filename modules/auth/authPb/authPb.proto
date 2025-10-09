@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option go_package = "github.com/Arismonx/nriny-shop";
+
+
+// structure
+message CredentialSearchReq {
+    string accessToken = 1;
+}
+
+message CredentialSearchRes {
+    bool isValid = 1;
+}
+
+message RoleCountReq {}
+
+message RoleCountRes {
+    int64 count = 1;
+}
+
+// Methods
+service AuthGrpcService {
+    rpc CredentialSearch(CredentialSearchReq) returns (CredentialSearchRes);
+    rpc RoleCount(RoleCountReq) returns (RoleCountRes);
+}
