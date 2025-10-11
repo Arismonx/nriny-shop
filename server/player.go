@@ -1,9 +1,13 @@
 package server
 
 import (
+	"log"
+
 	"github.com/Arismonx/nriny-shop/modules/player/playerHandler"
+	playerPb "github.com/Arismonx/nriny-shop/modules/player/playerPb"
 	"github.com/Arismonx/nriny-shop/modules/player/playerRepository"
 	"github.com/Arismonx/nriny-shop/modules/player/playerUsecase"
+	grpcconnect "github.com/Arismonx/nriny-shop/pkg/grpcConnect"
 )
 
 func (s *server) playerService() {
@@ -12,6 +16,17 @@ func (s *server) playerService() {
 	httpHandler := playerHandler.NewPlayerHttpHandler(s.cfg, usecase)
 	grpcHandler := playerHandler.NewPlayerGrpcHandler(usecase)
 	queueHandler := playerHandler.NewPlayerQueueHandler(s.cfg, usecase)
+
+	// Grpc Client
+	go func() {
+		grpcServer, lis := grpcconnect.NewGrpcServer(&s.cfg.Jwt, s.cfg.Grpc.GrpcPlayerUrl)
+
+		playerPb.RegisterPlayerGrpcServiceServer(grpcServer, grpcHandler)
+
+		log.Printf("Player gRPC server listening on %s", s.cfg.Grpc.GrpcPlayerUrl)
+		grpcServer.Serve(lis)
+
+	}()
 
 	_ = httpHandler
 	_ = grpcHandler

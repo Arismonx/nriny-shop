@@ -5,45 +5,87 @@ name: nriny-shop-db
 services:
   auth-db:
     image: mongo
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
     container_name: auth-db
     ports:
       - 27022:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123456
+    volumes:
+      - auth_mongo_data:/data/db
 
   item-db:
     image: mongo
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
     container_name: item-db
     ports:
       - 27018:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123456
+    volumes:
+      - item_mongo_data:/data/db
 
   player-db:
     image: mongo
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
     container_name: player-db
     ports:
       - 27019:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123456
+    volumes:
+      - player_mongo_data:/data/db
 
   payment-db:
     image: mongo
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
     container_name: payment-db
     ports:
       - 27020:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123456
+    volumes:
+      - payment_mongo_data:/data/db
 
   inventory-db:
     image: mongo
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
     container_name: inventory-db
     ports:
       - 27021:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123456
+    volumes:
+      - inventory_mongo_data:/data/db
+
+volumes:
+  auth_mongo_data:
+  item_mongo_data:
+  inventory_mongo_data:
+  payment_mongo_data:
+  player_mongo_data:
