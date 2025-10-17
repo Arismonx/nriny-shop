@@ -6,13 +6,20 @@ import (
 	"time"
 
 	"github.com/Arismonx/nriny-shop/config"
-	"go.mongodb.org/mongo-driver/v2/mongo"
-	"go.mongodb.org/mongo-driver/v2/mongo/options"
-	"go.mongodb.org/mongo-driver/v2/mongo/readpref"
+	// "go.mongodb.org/mongo-driver/v2/mongo"
+	// "go.mongodb.org/mongo-driver/v2/mongo/options"
+	// "go.mongodb.org/mongo-driver/v2/mongo/readpref"
+
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 func ConnectingMongoDB(pctx context.Context, cfg *config.Config) *mongo.Client {
-	client, err := mongo.Connect(options.Client().ApplyURI(cfg.Db.DB_Url))
+	// client, err := mongo.Connect(options.Client().ApplyURI(cfg.Db.DB_Url))
+
+	client, err := mongo.Connect(pctx, options.Client().ApplyURI(cfg.Db.DB_Url))
+
 	if err != nil {
 		log.Fatal("Error: connecting database :", err)
 	}
